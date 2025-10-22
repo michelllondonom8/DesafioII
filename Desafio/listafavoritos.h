@@ -1,7 +1,11 @@
 #ifndef LISTAFAVORITOS_H
 #define LISTAFAVORITOS_H
 
-#include <string>
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <chrono>
+#include <thread>
 using namespace std;
 
 class ListaFavoritos {

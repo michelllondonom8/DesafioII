@@ -3,7 +3,13 @@
 using namespace std;
 
 Usuario::Usuario(string nick, string tipo, string ciudadU, string paisU, string fecha)
-    : nickname(nick), membresiaTipo(tipo), ciudad(ciudadU), pais(paisU), fechaInscripcion(fecha) {}
+    : nickname(nick), membresiaTipo(tipo), ciudad(ciudadU), pais(paisU), fechaInscripcion(fecha) {
+    if (membresiaTipo == "Premium") {
+        lista = new ListaFavoritos(nickname, "Favoritos de " + nickname);
+    } else {
+        lista = nullptr;
+    }
+}
 
 string Usuario::getNickname() const {
     return nickname;
@@ -74,4 +80,6 @@ void Usuario::seguirLista() {
         cout << "[x] Los usuarios estándar no pueden seguir listas de otros usuarios." << endl;
     }
 }
-
+Usuario::~Usuario() {
+    delete lista;
+}
