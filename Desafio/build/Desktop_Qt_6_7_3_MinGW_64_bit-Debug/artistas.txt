@@ -1,0 +1,2 @@
+10001;Claudia Lorelle;28;Colombia;150000;3
+10002;Nicolas Vega;30;Argentina;87000;10

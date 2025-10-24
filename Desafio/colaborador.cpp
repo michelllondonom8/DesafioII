@@ -26,7 +26,3 @@ void Colaborador::mostrar() const {
          << " | Tipo: " << tipo << endl;
 }
 
-// Devuelve el tipo de colaborador
-string Colaborador::getTipo() const {
-    return tipo;
-}

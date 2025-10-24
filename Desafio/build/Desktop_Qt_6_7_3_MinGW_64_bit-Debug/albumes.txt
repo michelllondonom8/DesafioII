@@ -1,0 +1,2 @@
+01;10001;Lugar Secreto;Pop,Latina;2024-05-12;2400;Sony;/users/storage/claudia lorelle/image/lugar secreto.png;9
+02;10002;Horizonte Azul;Rock,Pop;2023-08-01;1800;Universal;/users/storage/nicolas vega/image/horizonte azul.png;8

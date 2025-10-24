@@ -18,11 +18,12 @@ public:
 
     ~Colaborador();
 
-
     void mostrar() const;
 
-
-    string getTipo() const;
+    string getNombre() const { return nombre; }
+    string getApellido() const { return apellido; }
+    string getCodigo() const { return codigoAfiliacion; }
+    string getTipo() const {return tipo;}
 };
 
 #endif // COLABORADOR_H
