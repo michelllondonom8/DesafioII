@@ -1,2 +1,2 @@
-01;10001;Lugar Secreto;Pop,Latina;2024-05-12;2400;Sony;/users/storage/claudia lorelle/image/lugar secreto.png;9
-02;10002;Horizonte Azul;Rock,Pop;2023-08-01;1800;Universal;/users/storage/nicolas vega/image/horizonte azul.png;8
+01|10001|Lugar_Secreto|Pop,Latina|2020-05-21|1800|Universal|9|/users/storage/claudia_lorelle/image/lugar_secreto.png
+02|10002|Cumbres|Rock|2019-02-11|2400|Sony|8|/users/storage/los_andes_band/image/cumbres.png

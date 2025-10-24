@@ -1,2 +1,3 @@
-michell;premium;Medellin;Colombia;2025-08-10
-juancho;estandar;Bogota;Colombia;2025-06-12
+alice|Premium|Medellin|Colombia|2025-01-10
+bob|Estandar|Bogota|Colombia|2025-02-15
+carla|Premium|Cali|Colombia|2024-11-05

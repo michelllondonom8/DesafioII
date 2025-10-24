@@ -1,3 +1,4 @@
-001;C;Escucha ahora los nuevos éxitos de la semana.
-002;B;Suscríbete a UdeATunes Premium y disfruta sin anuncios.
-003;AAA;¡Oferta limitada! Pásate a Premium por solo $19.900 al mes.
+C|Disfruta tu música con anuncios relevantes.
+B|Prueba el plan Premium por un mes gratis.
+A|AAA Oferta limitada: suscripción con 50% de descuento.
+C|Evento local: concierto este sábado.

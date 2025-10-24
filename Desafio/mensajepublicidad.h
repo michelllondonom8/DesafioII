@@ -26,8 +26,8 @@ public:
     int getId() const;
     string getMensaje() const;
     char getCategoria() const;
-
-    static MensajePublicidad* elegirAleatorio(MensajePublicidad* lista, int cantidad);
+    static void inicializarAzar();
+    static int elegirAleatorio(const MensajePublicidad* lista, int cantidad, int ultimoId);
 };
 
 #endif

@@ -8,7 +8,6 @@ void Cancion::ampliarCreditos() {
     for (int i = 0; i < numCreditos; ++i) nuevo[i] = creditos[i];
     for (int i = numCreditos; i < nuevaCap; ++i) nuevo[i] = nullptr;
     delete[] creditos;
-    creditos = nuevo;
     capacidad = nuevaCap;
 }
 
@@ -18,6 +17,7 @@ Cancion::Cancion() {
     duracion = 0;
     rutaBaja = "";
     rutaAlta = "";
+    albumID = "";
     reproducciones = 0;
     numCreditos = 0;
     capacidad = CAPACIDAD_INICIAL;
@@ -26,12 +26,13 @@ Cancion::Cancion() {
 }
 
 Cancion::Cancion(int _id, const string& _titulo, int _duracion,
-                 const string& _rutaBaja, const string& _rutaAlta) {
+                 const string& _rutaBaja, const string& _rutaAlta, const string& _albumID) {
     id = _id;
     titulo = _titulo;
     duracion = _duracion;
     rutaBaja = _rutaBaja;
     rutaAlta = _rutaAlta;
+    albumID = _albumID;
     reproducciones = 0;
     numCreditos = 0;
     capacidad = CAPACIDAD_INICIAL;
@@ -45,6 +46,7 @@ Cancion::Cancion(const Cancion& otra) {
     duracion = otra.duracion;
     rutaBaja = otra.rutaBaja;
     rutaAlta = otra.rutaAlta;
+    albumID = otra.albumID;
     reproducciones = otra.reproducciones;
 
     numCreditos = otra.numCreditos;
@@ -63,6 +65,7 @@ Cancion& Cancion::operator=(const Cancion& otra) {
     duracion = otra.duracion;
     rutaBaja = otra.rutaBaja;
     rutaAlta = otra.rutaAlta;
+    albumID = otra.albumID;
     reproducciones = otra.reproducciones;
     numCreditos = otra.numCreditos;
     capacidad = otra.capacidad;
@@ -121,6 +124,9 @@ int Cancion::getId() const { return id; }
 string Cancion::getTitulo() const { return titulo; }
 int Cancion::getDuracion() const { return duracion; }
 long Cancion::getReproducciones() const { return reproducciones; }
+string Cancion::getRutaAlta() const { return rutaAlta; }
+string Cancion::getRutaBaja() const { return rutaBaja; }
+string Cancion::getAlbumID() const { return albumID; }
 int Cancion::getNumCreditos() const { return numCreditos; }
 
 bool Cancion::operator==(const Cancion& otra) const {

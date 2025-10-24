@@ -1,2 +1,2 @@
-100010101;A tu lado;210;/users/storage/claudia lorelle/audio/a tu lado;/CLAU1234567,JORP9876543;/MARI1234567;/JUAN7654321;12000
-100020102;Día gris;190;/users/storage/nicolas vega/audio/dia gris;/CARL1234567;/PEDR8765432;/NICO8765432;8000
+100010101|A_tu_lado|01|240|/users/storage/claudia_lorelle/audio/a_tu_lado
+100020201|Montanas|02|300|/users/storage/los_andes_band/audio/montanas

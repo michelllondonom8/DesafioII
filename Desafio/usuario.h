@@ -24,12 +24,14 @@ public:
     string getCiudad() const;
     string getPais() const;
     string getFechaInscripcion() const;
+    ListaFavoritos* getListaFavoritos() const { return lista; }
 
     void mostrarInfo() const;
     bool agregarFavorito();
     bool quitarFavorito();
     void ejecutarFavoritos();
     void seguirLista();
+
 };
 
 

@@ -11,6 +11,7 @@ SOURCES += \
         listafavoritos.cpp \
         main.cpp \
         mensajepublicidad.cpp \
+        udeatunes.cpp \
         usuario.cpp
 
 HEADERS += \
@@ -20,5 +21,6 @@ HEADERS += \
     colaborador.h \
     listafavoritos.h \
     mensajepublicidad.h \
+    udeatunes.h \
     udeatunes.h \
     usuario.h

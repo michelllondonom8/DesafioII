@@ -142,7 +142,7 @@ bool ListaFavoritos::seguirOtraLista(ListaFavoritos* otra) {
     for (int i = 0; i < otra->getCantidad(); ++i) {
         int id = otra->getCancionEn(i);
         if (indiceDeCancion(id) == -1) {
-            if (cantidad + nuevas >= capacidad) break; // no más espacio
+            if (cantidad + nuevas >= capacidad) break;
             temp[nuevas++] = id;
         }
     }
@@ -151,6 +151,12 @@ bool ListaFavoritos::seguirOtraLista(ListaFavoritos* otra) {
         delete[] temp;
         cout << "[i] No se agregaron canciones (ya existían o no hay espacio).\n";
         return false;
+    }
+
+    if (agregadasPorSeguir != nullptr) {
+        delete[] agregadasPorSeguir;
+        agregadasPorSeguir = nullptr;
+        cantidadAgregadasPorSeguir = 0;
     }
 
     agregadasPorSeguir = new int[nuevas];

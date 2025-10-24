@@ -1,9 +1,9 @@
-#include <iostream>
-#include <string>
-
-using namespace std;
+// main.cpp
+#include "UdeATunes.h"
 
 int main() {
-    cout << "Hola MUndo";
+    UdeATunes ude;
+    ude.inicializar();
+    ude.menuPrincipal();
     return 0;
 }

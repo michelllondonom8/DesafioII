@@ -18,7 +18,8 @@ MensajePublicidad::MensajePublicidad(int _id, const string& _mensaje, char _cate
 MensajePublicidad::~MensajePublicidad() {}
 
 void MensajePublicidad::mostrar() const {
-    cout << " [" << categoria << "] Prioridad " << prioridad << "x - " << mensaje << endl;
+    cout << mensaje << endl;
+    cout << "Categoría: " << categoria << endl;
 }
 
 void MensajePublicidad::cambiarCategoria(char tipo) {
@@ -39,10 +40,35 @@ int MensajePublicidad::getId() const { return id; }
 string MensajePublicidad::getMensaje() const { return mensaje; }
 char MensajePublicidad::getCategoria() const { return categoria; }
 
-MensajePublicidad* MensajePublicidad::elegirAleatorio(MensajePublicidad* lista, int cantidad) {
-    if (cantidad <= 0) return nullptr;
-    srand(static_cast<unsigned>(time(NULL)));
-    int indice = rand() % cantidad;
-    return &lista[indice];
+void MensajePublicidad::inicializarAzar() {
+    srand(static_cast<unsigned>(time(nullptr)));
 }
 
+int MensajePublicidad::elegirAleatorio(const MensajePublicidad* lista, int cantidad, int ultimoId) {
+    if (cantidad <= 0 || lista == nullptr) return -1;
+    int suma = 0;
+    for (int i = 0; i < cantidad; ++i) suma += lista[i].getPrioridad();
+    if (suma <= 0) return rand() % cantidad;
+
+    const int MAX_INTENTOS = 8;
+    for (int intento = 0; intento < MAX_INTENTOS; ++intento) {
+        int r = (rand() % suma) + 1;
+        int acumulado = 0;
+        for (int i = 0; i < cantidad; ++i) {
+            acumulado += lista[i].getPrioridad();
+            if (r <= acumulado) {
+                if (lista[i].getId() == ultimoId && cantidad > 1) {
+                    break;
+                }
+                return i;
+            }
+        }
+    }
+    int r = (rand() % suma) + 1;
+    int acumulado = 0;
+    for (int i = 0; i < cantidad; ++i) {
+        acumulado += lista[i].getPrioridad();
+        if (r <= acumulado) return i;
+    }
+    return 0;
+}
