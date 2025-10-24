@@ -11,7 +11,6 @@ SOURCES += \
         listafavoritos.cpp \
         main.cpp \
         mensajepublicidad.cpp \
-        udeatunes.cpp \
         usuario.cpp
 
 HEADERS += \

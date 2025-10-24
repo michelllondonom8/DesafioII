@@ -204,4 +204,3 @@ ListaFavoritos::~ListaFavoritos() {
     delete[] canciones;
     delete[] agregadasPorSeguir;
 }
-

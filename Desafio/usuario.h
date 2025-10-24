@@ -1,5 +1,6 @@
 #ifndef USUARIO_H
 #define USUARIO_H
+#include <iostream>
 #include <string>
 #include "listafavoritos.h"
 using namespace std;
@@ -15,6 +16,7 @@ private:
 
 public:
     Usuario(string nick, string tipo, string ciudad, string pais, string fecha);
+    ~Usuario();
 
     string getNickname() const;
     string getMembresia() const;
@@ -23,11 +25,11 @@ public:
     string getPais() const;
     string getFechaInscripcion() const;
 
+    void mostrarInfo() const;
     bool agregarFavorito();
     bool quitarFavorito();
     void ejecutarFavoritos();
     void seguirLista();
-    ListaFavoritos* getListaFavoritos() const { return lista; }
 };
 
 
