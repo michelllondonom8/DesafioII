@@ -6,6 +6,7 @@
 #include <thread>
 #include <chrono>
 #include "colaborador.h"
+class Album;
 using namespace std;
 
 class Cancion {
@@ -21,6 +22,7 @@ private:
     Colaborador** creditos;
     int numCreditos;
     int capacidad;
+    Album* album;
 
     void ampliarCreditos();
 
@@ -45,8 +47,10 @@ public:
     string getRutaAlta() const;
     string getRutaBaja()const;
     string getAlbumID() const;
+    Album* getAlbum() const { return album; }
     int getNumCreditos() const;
 
+    void setAlbum(Album* a) { album = a; }
     bool operator==(const Cancion& otra) const;
     friend ostream& operator<<(ostream& os, const Cancion& c);
 };

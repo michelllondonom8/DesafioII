@@ -1,2 +1,2 @@
-01|10001|Lugar_Secreto|Pop,Latina|2020-05-21|1800|Universal|9|/users/storage/claudia_lorelle/image/lugar_secreto.png
-02|10002|Cumbres|Rock|2019-02-11|2400|Sony|8|/users/storage/los_andes_band/image/cumbres.png
+1001|10001|Lugar Secreto|Pop|2023|240|Universal|9|/portadas/lugar_secreto.png
+1002|10002|Tierra Alta|Rock|2022|300|Sony|8|/portadas/tierra_alta.png

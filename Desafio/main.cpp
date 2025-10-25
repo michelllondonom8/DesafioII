@@ -1,9 +1,8 @@
-// main.cpp
 #include "UdeATunes.h"
 
 int main() {
-    UdeATunes ude;
-    ude.inicializar();
-    ude.menuPrincipal();
+    UdeATunes app;
+    app.inicializar();
+    app.menuPrincipal();  // carga automática + menú por tipo de usuario
     return 0;
 }

@@ -28,6 +28,8 @@ public:
 
     string getNombre() const;
     int getTotalAlbumes() const;
+    Album* getAlbum(int i) const { return albumes[i]; }
+
 };
 
 #endif

@@ -13,16 +13,25 @@ Album::Album() {
         canciones[i] = nullptr;
 }
 
-Album::Album(const string& _nombre, const string& _genero, int _anio) {
+Album::Album(const string& _id, const string& _idArtista, const string& _nombre,
+             const string& _genero, const string& _fecha, int _duracion,
+             const string& _sello, int _puntuacion, const string& _rutaPortada) {
     nombre = _nombre;
     genero = _genero;
-    anio = _anio;
+    anio = stoi(_fecha.substr(0,4)); // solo guardamos el año (2020)
+    rutaPortada = _rutaPortada;
+    // puedes guardar los demás si luego los usas
+    sello = _sello;
+    puntuacion = _puntuacion;
+    duracionTotalAlbum = _duracion;
+
     totalCanciones = 0;
     capacidad = CAPACIDAD_INICIAL;
     canciones = new Cancion*[capacidad];
-    for (int i = 0; i < capacidad; i = i + 1)
+    for (int i = 0; i < capacidad; ++i)
         canciones[i] = nullptr;
 }
+
 
 Album::~Album() {
     delete[] canciones;
@@ -71,6 +80,3 @@ void Album::mostrarAlbum() const {
 
     cout << "Duración total: " << duracionTotal() << " segundos" << endl;
 }
-
-string Album::getNombre() const { return nombre; }
-int Album::getTotalCanciones() const { return totalCanciones; }
