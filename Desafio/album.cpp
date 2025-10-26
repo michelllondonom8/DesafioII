@@ -1,6 +1,6 @@
 #include "album.h"
-
 #define CAPACIDAD_INICIAL 3
+using namespace std;
 
 Album::Album() {
     nombre = "Sin nombre";
@@ -9,18 +9,20 @@ Album::Album() {
     totalCanciones = 0;
     capacidad = CAPACIDAD_INICIAL;
     canciones = new Cancion*[capacidad];
-    for (int i = 0; i < capacidad; i = i + 1)
+    artista = nullptr;
+    for (int i = 0; i < capacidad; ++i)
         canciones[i] = nullptr;
 }
 
-Album::Album(const string& _id, const string& _idArtista, const string& _nombre,
-             const string& _genero, const string& _fecha, int _duracion,
-             const string& _sello, int _puntuacion, const string& _rutaPortada) {
+Album::Album(const std::string& _id, const std::string& _idArtista, const std::string& _nombre,
+             const std::string& _genero, const std::string& _fecha, int _duracion,
+             const std::string& _sello, int _puntuacion, const std::string& _rutaPortada) {
+    id = _id;
+    idArtista = _idArtista;
     nombre = _nombre;
     genero = _genero;
-    anio = stoi(_fecha.substr(0,4)); // solo guardamos el año (2020)
+    anio = stoi(_fecha.substr(0,4));
     rutaPortada = _rutaPortada;
-    // puedes guardar los demás si luego los usas
     sello = _sello;
     puntuacion = _puntuacion;
     duracionTotalAlbum = _duracion;
@@ -28,6 +30,7 @@ Album::Album(const string& _id, const string& _idArtista, const string& _nombre,
     totalCanciones = 0;
     capacidad = CAPACIDAD_INICIAL;
     canciones = new Cancion*[capacidad];
+    artista = nullptr;
     for (int i = 0; i < capacidad; ++i)
         canciones[i] = nullptr;
 }
@@ -40,9 +43,9 @@ Album::~Album() {
 void Album::ampliarEspacio() {
     int nuevaCapacidad = capacidad * 2;
     Cancion** nuevaLista = new Cancion*[nuevaCapacidad];
-    for (int i = 0; i < totalCanciones; i = i + 1)
+    for (int i = 0; i < totalCanciones; ++i)
         nuevaLista[i] = canciones[i];
-    for (int i = totalCanciones; i < nuevaCapacidad; i = i + 1)
+    for (int i = totalCanciones; i < nuevaCapacidad; ++i)
         nuevaLista[i] = nullptr;
 
     delete[] canciones;
@@ -52,31 +55,13 @@ void Album::ampliarEspacio() {
 
 bool Album::agregarCancion(Cancion* c) {
     if (c == nullptr) return false;
-    for (int i = 0; i < totalCanciones; i = i + 1)
+    for (int i = 0; i < totalCanciones; ++i)
         if (canciones[i] == c) return false;
 
     if (totalCanciones >= capacidad)
         ampliarEspacio();
 
     canciones[totalCanciones] = c;
-    totalCanciones = totalCanciones + 1;
+    totalCanciones++;
     return true;
-}
-
-int Album::duracionTotal() const {
-    int total = 0;
-    for (int i = 0; i < totalCanciones; i = i + 1)
-        total = total + canciones[i]->getDuracion();
-    return total;
-}
-
-void Album::mostrarAlbum() const {
-    cout << "\n Álbum: " << nombre << " (" << anio << ")" << endl;
-    cout << "Género: " << genero << endl;
-    cout << "Canciones: " << totalCanciones << endl;
-
-    for (int i = 0; i < totalCanciones; i = i + 1)
-        cout << "  - " << canciones[i]->getTitulo() << endl;
-
-    cout << "Duración total: " << duracionTotal() << " segundos" << endl;
 }

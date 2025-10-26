@@ -1,5 +1,5 @@
 #include "artista.h"
-
+using namespace std;
 #define CAPACIDAD_INICIAL 3
 
 Artista::Artista() {
@@ -8,7 +8,7 @@ Artista::Artista() {
     totalAlbumes = 0;
     capacidad = CAPACIDAD_INICIAL;
     albumes = new Album*[capacidad];
-    for (int i = 0; i < capacidad; i = i + 1)
+    for (int i = 0; i < capacidad; ++i)
         albumes[i] = nullptr;
 }
 
@@ -18,7 +18,7 @@ Artista::Artista(const string& _nombre, const string& _pais) {
     totalAlbumes = 0;
     capacidad = CAPACIDAD_INICIAL;
     albumes = new Album*[capacidad];
-    for (int i = 0; i < capacidad; i = i + 1)
+    for (int i = 0; i < capacidad; ++i)
         albumes[i] = nullptr;
 }
 
@@ -29,9 +29,9 @@ Artista::~Artista() {
 void Artista::ampliarEspacio() {
     int nuevaCapacidad = capacidad * 2;
     Album** nuevaLista = new Album*[nuevaCapacidad];
-    for (int i = 0; i < totalAlbumes; i = i + 1)
+    for (int i = 0; i < totalAlbumes; ++i)
         nuevaLista[i] = albumes[i];
-    for (int i = totalAlbumes; i < nuevaCapacidad; i = i + 1)
+    for (int i = totalAlbumes; i < nuevaCapacidad; ++i)
         nuevaLista[i] = nullptr;
 
     delete[] albumes;
@@ -41,31 +41,17 @@ void Artista::ampliarEspacio() {
 
 bool Artista::agregarAlbum(Album* a) {
     if (a == nullptr) return false;
-    for (int i = 0; i < totalAlbumes; i = i + 1)
+    for (int i = 0; i < totalAlbumes; ++i)
         if (albumes[i] == a) return false;
 
     if (totalAlbumes >= capacidad)
         ampliarEspacio();
 
     albumes[totalAlbumes] = a;
-    totalAlbumes = totalAlbumes + 1;
+    totalAlbumes++;
     return true;
 }
 
-int Artista::contarCanciones() const {
-    int total = 0;
-    for (int i = 0; i < totalAlbumes; i = i + 1)
-        total = total + albumes[i]->getTotalCanciones();
-    return total;
+string Artista::getNombre() const{
+    return nombre;
 }
-
-void Artista::mostrarArtista() const {
-    cout << "\n Artista: " << nombre << " (" << pais << ")" << endl;
-    cout << "Álbumes: " << totalAlbumes << " | Total de canciones: " << contarCanciones() << endl;
-
-    for (int i = 0; i < totalAlbumes; i = i + 1)
-        albumes[i]->mostrarAlbum();
-}
-
-string Artista::getNombre() const { return nombre; }
-int Artista::getTotalAlbumes() const { return totalAlbumes; }

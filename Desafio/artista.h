@@ -4,12 +4,11 @@
 #include <iostream>
 #include <string>
 #include "album.h"
-using namespace std;
 
 class Artista {
 private:
-    string nombre;
-    string pais;
+    std::string nombre;
+    std::string pais;
 
     Album** albumes;
     int totalAlbumes;
@@ -19,16 +18,11 @@ private:
 
 public:
     Artista();
-    Artista(const string& _nombre, const string& _pais);
+    Artista(const std::string& _nombre, const std::string& _pais);
     ~Artista();
 
     bool agregarAlbum(Album* a);
-    int contarCanciones() const;
-    void mostrarArtista() const;
-
-    string getNombre() const;
-    int getTotalAlbumes() const;
-    Album* getAlbum(int i) const { return albumes[i]; }
+    std::string getNombre() const;
 
 };
 

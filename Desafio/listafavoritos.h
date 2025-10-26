@@ -1,17 +1,14 @@
 #ifndef LISTAFAVORITOS_H
 #define LISTAFAVORITOS_H
-
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
 #include <chrono>
 #include <thread>
-using namespace std;
-
 class ListaFavoritos {
 private:
-    string propietarioNick;
-    string nombreLista;
+    std::string propietarioNick;
+    std::string nombreLista;
 
     int *canciones;
     int capacidad;
@@ -19,33 +16,28 @@ private:
 
     int *agregadasPorSeguir;
     int cantidadAgregadasPorSeguir;
-    string siguiendoA;
+    std::string siguiendoA;
     bool estaSiguiendo;
 
     int indiceDeCancion(int id) const;
 
 public:
 
-    ListaFavoritos(const string& propietario, const string& nombre = "Favoritos");
+    ListaFavoritos(const std::string& propietario, const std::string& nombre = "Favoritos");
     ListaFavoritos(const ListaFavoritos& otro);
     ListaFavoritos& operator=(const ListaFavoritos& otro);
     ~ListaFavoritos();
 
-    string getPropietario() const;
+    std::string getPropietario() const;
     int getCantidad() const;
     int getCancionEn(int indice) const;
 
     bool agregar(int idCancion);
     bool eliminar(int idCancion);
     void mezclar();
-    void ejecutarLista();
-    void ejecutarLista(bool aleatorio);
-
     bool seguirOtraLista(ListaFavoritos* otra);
     bool dejarDeSeguir();
-
-    int operator[](int indice) const;
-    bool operator==(const ListaFavoritos& otro) const;
+    bool estaSiguiendoOtro();
 };
 
 

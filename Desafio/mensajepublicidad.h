@@ -5,26 +5,23 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
-using namespace std;
 
 class MensajePublicidad {
 private:
     int id;
-    string mensaje;
+    std::string mensaje;
     char categoria;
     int prioridad;
 
 public:
     MensajePublicidad();
-    MensajePublicidad(int _id, const string& _mensaje, char _categoria, int _prioridad = 1);
+    MensajePublicidad(int _id, const std::string& _mensaje, char _categoria, int _prioridad = 1);
     ~MensajePublicidad();
 
-    void mostrar() const;
-    void cambiarCategoria(char tipo);
 
     int getPrioridad() const;
     int getId() const;
-    string getMensaje() const;
+    std::string getMensaje() const;
     char getCategoria() const;
     static void inicializarAzar();
     static int elegirAleatorio(const MensajePublicidad* lista, int cantidad, int ultimoId);

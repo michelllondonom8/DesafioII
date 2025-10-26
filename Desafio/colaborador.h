@@ -2,28 +2,27 @@
 #define COLABORADOR_H
 #include <string>
 #include <iostream>
-using namespace std;
 
 class Colaborador {
 private:
-    string nombre;
-    string apellido;
-    string codigoAfiliacion;
-    string tipo;
+    std::string nombre;
+    std::string apellido;
+    std::string codigoAfiliacion;
+    std::string tipo;
 
 public:
 
     Colaborador();
-    Colaborador(const string& nom, const string& ape, const string& cod, const string& tipo);
+    Colaborador(const std::string& nom, const std::string& ape, const std::string& cod, const std::string& tipo);
 
     ~Colaborador();
 
     void mostrar() const;
 
-    string getNombre() const { return nombre; }
-    string getApellido() const { return apellido; }
-    string getCodigo() const { return codigoAfiliacion; }
-    string getTipo() const {return tipo;}
+    std::string getNombre() const { return nombre; }
+    std::string getApellido() const { return apellido; }
+    std::string getCodigo() const { return codigoAfiliacion; }
+    std::string getTipo() const {return tipo;}
 };
 
 #endif // COLABORADOR_H

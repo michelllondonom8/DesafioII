@@ -5,17 +5,15 @@
 #include <string>
 #include "cancion.h"
 class Artista;
-using namespace std;
-
 class Album {
 private:
-    string id;
-    string idArtista;
-    string rutaPortada;
-    string nombre;
-    string genero;
+    std::string id;
+    std::string idArtista;
+    std::string rutaPortada;
+    std::string nombre;
+    std::string genero;
     int anio;
-    string sello;
+    std::string sello;
     int puntuacion;
     int duracionTotalAlbum;
 
@@ -29,21 +27,16 @@ private:
 
 public:
     Album();
-    Album(const string& _id, const string& _idArtista, const string& _nombre,
-          const string& _genero, const string& _fecha, int _duracion,
-          const string& _sello, int _puntuacion, const string& _rutaPortada);
+    Album(const std::string& _id, const std::string& _idArtista, const std::string& _nombre,
+          const std::string& _genero, const std::string& _fecha, int _duracion,
+          const std::string& _sello, int _puntuacion, const std::string& _rutaPortada);
     ~Album();
 
     bool agregarCancion(Cancion* c);
-    int duracionTotal() const;
-    void mostrarAlbum() const;
-
-    string getId() const { return id; }
-    string getIdArtista() const { return idArtista; }
-    string getNombre() const { return nombre; }
+    std::string getIdArtista() const { return idArtista; }
+    std::string getNombre() const { return nombre; }
     int getTotalCanciones() const { return totalCanciones; }
-    string getRutaPortada() const { return rutaPortada; }
-    Cancion* getCancion(int i) const { return canciones[i]; }
+    std::string getRutaPortada() const { return rutaPortada; }
 
     void setArtista(Artista* a) { artista = a; }
     Artista* getArtista() const { return artista; }

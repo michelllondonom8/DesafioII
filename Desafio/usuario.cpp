@@ -1,9 +1,9 @@
 #include "Usuario.h"
 #include <iostream>
-using namespace std;
 #include "udeatunes.h"
-#include <thread>
 #include <chrono>
+#include <thread>
+using namespace std;
 
 Usuario::Usuario(string nick, string tipo, string ciudadU, string paisU, string fecha)
     : nickname(nick), membresiaTipo(tipo), ciudad(ciudadU), pais(paisU), fechaInscripcion(fecha) {
@@ -58,7 +58,7 @@ bool Usuario::agregarFavorito(UdeATunes* sistema) {
     Cancion* cancion = sistema->buscarCancionPorNombre(nombreCancion);
 
     if (cancion == nullptr) {
-        cout << "[x] Cancion no encontrada.\n";
+        cout << "Cancion no encontrada.\n";
         sistema->mostrarEstadisticas();
         return false;
     }
@@ -76,19 +76,19 @@ bool Usuario::agregarFavorito(UdeATunes* sistema) {
 
     sistema->sumarIteraciones(2);
     if (lista->agregar(cancion->getId())) {
-        cout << "[✓] Cancion agregada a favoritos.\n";
+        cout << "Cancion agregada a favoritos.\n";
         sistema->sumarMemoria(sizeof(int));
         sistema->mostrarEstadisticas();
         return true;
     } else {
-        cout << "[x] No se pudo agregar (ya existe o lista llena).\n";
+        cout << "No se pudo agregar (ya existe o lista llena).\n";
         sistema->mostrarEstadisticas();
         return false;
     }
 }
 bool Usuario::quitarFavorito(UdeATunes* sistema) {
     if (lista->getCantidad() == 0) {
-        cout << "[!] Tu lista de favoritos esta vacia.\n";
+        cout << "Tu lista de favoritos esta vacia.\n";
         sistema->mostrarEstadisticas();
         return false;
     }
@@ -104,24 +104,29 @@ bool Usuario::quitarFavorito(UdeATunes* sistema) {
     Cancion* cancion = sistema->buscarCancionPorNombre(nombreCancion);
 
     if (cancion == nullptr) {
-        cout << "[x] Cancion no encontrada en el sistema.\n";
+        cout << "Cancion no encontrada en el sistema.\n";
         sistema->mostrarEstadisticas();
         return false;
     }
     if (lista->eliminar(cancion->getId())) {
-        cout << "[✓] Cancion eliminada de favoritos.\n";
+        cout << "Cancion eliminada de favoritos.\n";
         sistema->restarMemoria(sizeof(int));
         sistema->mostrarEstadisticas();
         return true;
     } else {
-        cout << "[x] Cancion no encontrada en tu lista.\n";
+        cout << "Cancion no encontrada en tu lista.\n";
         sistema->mostrarEstadisticas();
         return false;
     }
 }
 void Usuario::ejecutarFavoritos(UdeATunes* sistema) {
+    if (membresiaTipo != "Premium") {
+        cout << "Esta funcion es solo para usuarios Premium.\n";
+        return;
+    }
+
     if (lista->getCantidad() == 0) {
-        cout << "[!] Tu lista de favoritos esta vacia.\n";
+        cout << "Tu lista de favoritos esta vacia.\n";
         sistema->mostrarEstadisticas();
         return;
     }
@@ -137,7 +142,7 @@ void Usuario::ejecutarFavoritos(UdeATunes* sistema) {
     if (!cin || (opcion != 1 && opcion != 2)) {
         cin.clear();
         cin.ignore(1000, '\n');
-        cout << "[x] Opcion invalida.\n";
+        cout << "Opcion invalida.\n";
         sistema->mostrarEstadisticas();
         return;
     }
@@ -151,30 +156,149 @@ void Usuario::ejecutarFavoritos(UdeATunes* sistema) {
     int total = lista->getCantidad();
     int limite = (total > 5) ? 5 : total;
 
-    // Si es aleatorio, mezclar primero
     if (aleatorio) {
         lista->mezclar();
     }
 
-    for (int i = 0; i < limite; i++) {
-        int idCancion = lista->getCancionEn(i);
+    const int MAX_HISTORIAL = 6;
+    Cancion* historial[MAX_HISTORIAL] = {nullptr};
+    int totalEnHistorial = 0;
 
-        if (idCancion <= 0) continue;
-        Cancion* c = sistema->buscarCancionPorId(idCancion);
+    bool reproduciendo = true;
+    bool modoRepetir = false;
+    bool pausado = false;
+    int indiceLista = 0;
+    Cancion* cancionActual = nullptr;
 
-        if (c == nullptr) {
-            cout << "[!] Cancion con ID " << idCancion << " no encontrada.\n";
-            continue;
+    while (reproduciendo && indiceLista < limite) {
+        if (!modoRepetir) {
+            int idCancion = lista->getCancionEn(indiceLista);
+
+            if (idCancion <= 0) {
+                indiceLista++;
+                continue;
+            }
+
+            cancionActual = sistema->buscarCancionPorId(idCancion);
+
+            if (cancionActual == nullptr) {
+                cout << "Cancion con ID " << idCancion << " no encontrada.\n";
+                indiceLista++;
+                continue;
+            }
+
+            historial[totalEnHistorial % MAX_HISTORIAL] = cancionActual;
+            totalEnHistorial++;
         }
-        Album* al = c->getAlbum();
+
+        Album* al = cancionActual->getAlbum();
         Artista* a = (al != nullptr) ? al->getArtista() : nullptr;
 
-        sistema->mostrarInterfazReproduccion(c, a, al, true);
+        cout << "\n====================================================\n";
+        cout << "REPRODUCIENDO MI LISTA DE FAVORITOS ";
+        cout << (aleatorio ? "(ALEATORIO)" : "(EN ORDEN)");
+        cout << (pausado ? " (PAUSADO)" : "") << "\n";
+        cout << "====================================================\n";
+        cout << "Cantante: " << (a ? a->getNombre() : "(Artista desconocido)") << "\n";
+        cout << "Album: " << (al ? al->getNombre() : "(Album no disponible)") << "\n";
+        if (al) cout << "Portada: " << al->getRutaPortada() << "\n";
+        cout << "----------------------------------------------------\n";
+        cout << "Titulo: " << cancionActual->getTitulo() << "\n";
+        cout << "Duracion: " << cancionActual->getDuracion() << " segundos\n";
+        cout << "Ruta: " << cancionActual->getRutaAlta() << "\n";
+        cout << "====================================================\n";
+        cout << "Estado: REPETIR [" << (modoRepetir ? "ON" : "OFF") << "]\n";
+        cout << "Progreso: [" << (indiceLista + 1) << "/" << limite << "]\n";
+        cout << "====================================================\n\n";
+
+        cout << "--- OPCIONES DE REPRODUCCION PREMIUM ---\n";
+        if (pausado) {
+            cout << "1. Iniciar reproduccion\n";
+        } else {
+            cout << "1. Detener reproduccion\n";
+        }
+        cout << "2. Siguiente cancion\n";
+
+        int cancionesDisponiblesAtras = (totalEnHistorial > MAX_HISTORIAL) ? MAX_HISTORIAL : (totalEnHistorial - 1);
+        if (cancionesDisponiblesAtras > 0) {
+            cout << "3. Cancion previa (hasta " << cancionesDisponiblesAtras << " hacia atras)\n";
+        }
+
+        cout << "4. " << (modoRepetir ? "Desactivar" : "Activar") << " modo repetir\n";
+        cout << "5. Continuar (avanza automaticamente en 3s)\n";
+        cout << "0. Salir de reproduccion\n";
+        cout << "\nSeleccione una opcion: ";
+
+        int opc;
+        cin >> opc;
+
+        switch(opc) {
+        case 1:
+            pausado = !pausado;
+            cout << (pausado ? "\nReproduccion pausada.\n" : "\nReproduccion iniciada.\n");
+            break;
+
+        case 2:
+            if (!pausado) {
+                cout << "\nSiguiente cancion...\n";
+                modoRepetir = false;
+                indiceLista++;
+                this_thread::sleep_for(chrono::seconds(1));
+            } else {
+                cout << "\nDebe iniciar la reproduccion primero.\n";
+            }
+            break;
+
+        case 3: {
+            int cancionesAtras = (totalEnHistorial > MAX_HISTORIAL) ? MAX_HISTORIAL : (totalEnHistorial - 1);
+
+            if (cancionesAtras > 0 && !pausado) {
+                int posActual = (totalEnHistorial - 1) % MAX_HISTORIAL;
+                int posPrev = (posActual - 1 + MAX_HISTORIAL) % MAX_HISTORIAL;
+
+                cancionActual = historial[posPrev];
+                totalEnHistorial--;
+                indiceLista--;
+
+                cout << "\nCancion previa...\n";
+                modoRepetir = false;
+                this_thread::sleep_for(chrono::seconds(1));
+            } else if (pausado) {
+                cout << "\nDebe iniciar la reproduccion primero.\n";
+            } else {
+                cout << "\nNo hay canciones previas.\n";
+            }
+            break;
+        }
+
+        case 4:
+            modoRepetir = !modoRepetir;
+            cout << "\nModo repetir: " << (modoRepetir ? "ACTIVADO" : "DESACTIVADO") << "\n";
+            break;
+
+        case 5:
+            if (!pausado) {
+                cout << "\nContinuando reproduccion automaticamente...\n";
+                this_thread::sleep_for(chrono::seconds(3));
+                if (!modoRepetir) indiceLista++;
+            } else {
+                cout << "\nDebe iniciar la reproduccion primero.\n";
+            }
+            break;
+
+        case 0:
+            cout << "\nReproduccion finalizada por el usuario.\n";
+            reproduciendo = false;
+            break;
+
+        default:
+            cout << "\nOpcion invalida.\n";
+        }
+
         sistema->sumarIteraciones(3);
-        std::this_thread::sleep_for(std::chrono::seconds(3));
     }
 
-    cout << "\n[✓] Reproduccion de favoritos finalizada.\n";
+    cout << "\n[Reproduccion de favoritos finalizada]\n";
     sistema->mostrarEstadisticas();
 }
 void Usuario::seguirLista(UdeATunes* sistema) {
@@ -186,20 +310,20 @@ void Usuario::seguirLista(UdeATunes* sistema) {
     sistema->sumarIteraciones();
 
     if (nicknameObjetivo == nickname) {
-        cout << "[!] No puedes seguir tu propia lista.\n";
+        cout << "No puedes seguir tu propia lista.\n";
         sistema->mostrarEstadisticas();
         return;
     }
     Usuario* otroUsuario = sistema->buscarUsuario(nicknameObjetivo);
 
     if (otroUsuario == nullptr) {
-        cout << "[x] Usuario no encontrado.\n";
+        cout << "Usuario no encontrado.\n";
         sistema->mostrarEstadisticas();
         return;
     }
 
     if (otroUsuario->getMembresia() != "Premium") {
-        cout << "[x] Solo puedes seguir listas de usuarios Premium.\n";
+        cout << "Solo puedes seguir listas de usuarios Premium.\n";
         sistema->mostrarEstadisticas();
         return;
     }
@@ -207,7 +331,7 @@ void Usuario::seguirLista(UdeATunes* sistema) {
     ListaFavoritos* otraLista = otroUsuario->getLista();
 
     if (otraLista == nullptr || otraLista->getCantidad() == 0) {
-        cout << "[!] El usuario '" << nicknameObjetivo
+        cout << "El usuario '" << nicknameObjetivo
              << "' no tiene canciones en su lista.\n";
         sistema->mostrarEstadisticas();
         return;
@@ -222,6 +346,27 @@ void Usuario::seguirLista(UdeATunes* sistema) {
         sistema->mostrarEstadisticas();
     }
 }
+void Usuario::dejarDeSeguir(UdeATunes* sistema) {
+    if (membresiaTipo != "Premium") {
+        cout << "Esta funcion es solo para usuarios Premium.\n";
+        return;
+    }
+
+    if (lista == nullptr || !lista->estaSiguiendoOtro()) {
+        cout << "\nNo estas siguiendo a ningun usuario.\n";
+        sistema->mostrarEstadisticas();
+        return;
+    }
+
+    cout << "\n--- Dejar de seguir lista ---\n";
+    if (lista->dejarDeSeguir()) {
+        cout << "Has dejado de seguir la lista.\n";
+        sistema->mostrarEstadisticas();
+    } else {
+        cout << "Error al dejar de seguir.\n";
+        sistema->mostrarEstadisticas();
+    }
+}
 Usuario::~Usuario() {
-    delete lista;
+
 }

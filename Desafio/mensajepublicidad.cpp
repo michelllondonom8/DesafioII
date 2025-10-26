@@ -1,5 +1,5 @@
 #include "mensajepublicidad.h"
-
+using namespace std;
 MensajePublicidad::MensajePublicidad() {
     id = 0;
     mensaje = "Sin mensaje";
@@ -12,28 +12,9 @@ MensajePublicidad::MensajePublicidad(int _id, const string& _mensaje, char _cate
     mensaje = _mensaje;
     categoria = _categoria;
     prioridad = _prioridad;
-    cambiarCategoria(_categoria);
 }
 
 MensajePublicidad::~MensajePublicidad() {}
-
-void MensajePublicidad::mostrar() const {
-    cout << mensaje << endl;
-    cout << "Categoría: " << categoria << endl;
-}
-
-void MensajePublicidad::cambiarCategoria(char tipo) {
-    categoria = tipo;
-    switch (tipo) {
-    case 'C': prioridad = 1; break;
-    case 'B': prioridad = 2; break;
-    case 'A': prioridad = 3; break;
-    default:
-        categoria = 'C';
-        prioridad = 1;
-        break;
-    }
-}
 
 int MensajePublicidad::getPrioridad() const { return prioridad; }
 int MensajePublicidad::getId() const { return id; }

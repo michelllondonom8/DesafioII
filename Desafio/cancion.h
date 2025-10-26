@@ -5,54 +5,37 @@
 #include <string>
 #include <thread>
 #include <chrono>
-#include "colaborador.h"
 class Album;
-using namespace std;
-
 class Cancion {
 private:
     int id;
-    string titulo;
+    std::string titulo;
     int duracion;
-    string rutaBaja;
-    string rutaAlta;
-    string albumID;
+    std::string rutaBaja;
+    std::string rutaAlta;
+    std::string albumID;
     long reproducciones;
-
-    Colaborador** creditos;
-    int numCreditos;
-    int capacidad;
     Album* album;
-
-    void ampliarCreditos();
 
 public:
     Cancion();
-    Cancion(int _id, const string& _titulo, int _duracion,
-            const string& _rutaBaja, const string& _rutaAlta, const string& _albumID);
+    Cancion(int _id, const std::string& _titulo, int _duracion,
+            const std::string& _rutaBaja, const std::string& _rutaAlta, const std::string& _albumID);
     Cancion(const Cancion& otra);
     Cancion& operator=(const Cancion& otra);
     ~Cancion();
 
-    void reproducir(bool esPremium);
     void sumarReproduccion();
 
-    bool agregarCredito(Colaborador* c);
-    bool eliminarCredito(int pos);
-
     int getId() const;
-    string getTitulo() const;
+    std::string getTitulo() const;
     int getDuracion() const;
     long getReproducciones() const;
-    string getRutaAlta() const;
-    string getRutaBaja()const;
-    string getAlbumID() const;
-    Album* getAlbum() const { return album; }
-    int getNumCreditos() const;
-
-    void setAlbum(Album* a) { album = a; }
-    bool operator==(const Cancion& otra) const;
-    friend ostream& operator<<(ostream& os, const Cancion& c);
+    std::string getRutaAlta() const;
+    std::string getRutaBaja()const;
+    std::string getAlbumID() const;
+    void setAlbum(Album* a);
+    Album* getAlbum() const;
 };
 
 #endif

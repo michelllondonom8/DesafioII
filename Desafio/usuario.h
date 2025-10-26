@@ -3,27 +3,25 @@
 #include <string>
 #include "listafavoritos.h"
 class UdeATunes;
-using namespace std;
-
 class Usuario {
 private:
-    string nickname;
-    string membresiaTipo; // "Premium" o "Estandar"
-    string ciudad;
-    string pais;
-    string fechaInscripcion;
+    std::string nickname;
+    std::string membresiaTipo; // "Premium" o "Estandar"
+    std::string ciudad;
+    std::string pais;
+    std::string fechaInscripcion;
     ListaFavoritos* lista;
 
 public:
-    Usuario(string nick, string tipo, string ciudadU, string paisU, string fecha);
+    Usuario(std::string nick, std::string tipo, std::string ciudadU, std::string paisU, std::string fecha);
     ~Usuario();
 
-    string getNickname() const;
-    string getMembresia() const;
-    void setMembresia(string tipo);
-    string getCiudad() const;
-    string getPais() const;
-    string getFechaInscripcion() const;
+    std::string getNickname() const;
+    std::string getMembresia() const;
+    void setMembresia(std::string tipo);
+    std::string getCiudad() const;
+    std::string getPais() const;
+    std::string getFechaInscripcion() const;
     ListaFavoritos* getLista() const { return lista; }
 
     void mostrarInfo() const;
@@ -31,6 +29,7 @@ public:
     bool quitarFavorito(UdeATunes* sistema);
     void ejecutarFavoritos(UdeATunes* sistema);
     void seguirLista(UdeATunes* sistema);
+    void dejarDeSeguir(UdeATunes* sistema);
 
 };
 

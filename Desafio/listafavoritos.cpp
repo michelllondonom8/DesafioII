@@ -105,34 +105,11 @@ void ListaFavoritos::mezclar() {
     }
 }
 
-void ListaFavoritos::ejecutarLista() {
-    cout << "[Reproduciendo lista de " << propietarioNick << " - " << nombreLista << "]\n";
-    int K = cantidad;
-    if (K == 0) {
-        cout << "(Lista vacía)\n";
-        return;
-    }
-    for (int i = 0; i < K; ++i) {
-        cout << "-> Reproduciendo canción con ID: " << canciones[i] << endl;
-        cout << "   (ruta portada: album/portada.png)" << endl;
-        cout << "   (ruta audio: audio/" << canciones[i] << "_320.ogg)" << endl;
-        this_thread::sleep_for(chrono::seconds(3));
-    }
-    cout << "[Fin de la lista]\n";
-}
-
-void ListaFavoritos::ejecutarLista(bool aleatorio) {
-    if (aleatorio) {
-        mezclar();
-    }
-    ejecutarLista();
-}
-
 bool ListaFavoritos::seguirOtraLista(ListaFavoritos* otra) {
     if (otra == nullptr) return false;
     if (otra == this) return false;
     if (estaSiguiendo) {
-        cout << "[!] Ya estás siguiendo a: " << siguiendoA << ". Debes dejar de seguir antes.\n";
+        cout << "Ya estas siguiendo a: " << siguiendoA << ". Debes dejar de seguir antes.\n";
         return false;
     }
 
@@ -149,7 +126,7 @@ bool ListaFavoritos::seguirOtraLista(ListaFavoritos* otra) {
 
     if (nuevas == 0) {
         delete[] temp;
-        cout << "[i] No se agregaron canciones (ya existían o no hay espacio).\n";
+        cout << "No se agregaron canciones (ya existían o no hay espacio).\n";
         return false;
     }
 
@@ -170,43 +147,33 @@ bool ListaFavoritos::seguirOtraLista(ListaFavoritos* otra) {
     estaSiguiendo = true;
 
     delete[] temp;
-    cout << "[✓] Ahora sigues la lista de " << siguiendoA << ". Se agregaron " << nuevas << " canciones.\n";
+    cout << "Ahora sigues la lista de " << siguiendoA << ". Se agregaron " << nuevas << " canciones.\n";
     return true;
 }
 
 bool ListaFavoritos::dejarDeSeguir() {
     if (!estaSiguiendo) {
-        cout << "[!] No sigues a nadie actualmente.\n";
+        cout << "No sigues a nadie actualmente.\n";
         return false;
     }
     for (int i = 0; i < cantidadAgregadasPorSeguir; ++i) {
         int id = agregadasPorSeguir[i];
         int idx = indiceDeCancion(id);
         if (idx != -1) {
-            // quitar (mover último)
             canciones[idx] = canciones[--cantidad];
-            // si movimos un id que también está en agregadasPorSeguir, su posición en agregadasPorSeguir no importa
         }
     }
 
     delete[] agregadasPorSeguir;
     agregadasPorSeguir = nullptr;
     cantidadAgregadasPorSeguir = 0;
-    cout << "[✓] Has dejado de seguir a " << siguiendoA << ". Las canciones agregadas por seguir fueron eliminadas.\n";
+    cout << "Has dejado de seguir a " << siguiendoA << ". Las canciones agregadas por seguir fueron eliminadas.\n";
     siguiendoA = "";
     estaSiguiendo = false;
     return true;
 }
 
-int ListaFavoritos::operator[](int indice) const {
-    if (indice < 0 || indice >= cantidad) return -1;
-    return canciones[indice];
-}
-
-bool ListaFavoritos::operator==(const ListaFavoritos& otro) const {
-    return propietarioNick == otro.propietarioNick;
-}
-ListaFavoritos::~ListaFavoritos() {
-    delete[] canciones;
-    delete[] agregadasPorSeguir;
+bool ListaFavoritos::estaSiguiendoOtro()
+{
+return estaSiguiendo;
 }

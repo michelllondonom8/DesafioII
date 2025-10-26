@@ -22,7 +22,6 @@ HEADERS += \
     listafavoritos.h \
     mensajepublicidad.h \
     udeatunes.h \
-    udeatunes.h \
     usuario.h
 
 DISTFILES += \
