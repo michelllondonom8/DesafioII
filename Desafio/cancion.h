@@ -1,51 +1,46 @@
-#ifndef CANCION_H
 #define CANCION_H
 
 #include <iostream>
 #include <string>
 #include <thread>
 #include <chrono>
-#include "colaborador.h"
-using namespace std;
+
+class Album;
 
 class Cancion {
 private:
     int id;
-    string titulo;
+    std::string titulo;
     int duracion;
-    string rutaBaja;
-    string rutaAlta;
+    std::string rutaBaja;
+    std::string rutaAlta;
+    std::string albumID;
     long reproducciones;
-
-    Colaborador** creditos;
-    int numCreditos;
-    int capacidad;
-
-    void ampliarCreditos();
+    Album* album;
 
 public:
     Cancion();
-    Cancion(int _id, const string& _titulo, int _duracion,
-            const string& _rutaBaja, const string& _rutaAlta);
+    Cancion(int _id, const std::string& _titulo, int _duracion,
+            const std::string& _rutaBaja, const std::string& _rutaAlta, const std::string& _albumID);
     Cancion(const Cancion& otra);
     Cancion& operator=(const Cancion& otra);
     ~Cancion();
 
-    void reproducir(bool esPremium);
     void sumarReproduccion();
 
-    bool agregarCredito(Colaborador* c);
-    bool eliminarCredito(int pos);
-
     int getId() const;
-    string getTitulo() const;
+    std::string getTitulo() const;
     int getDuracion() const;
     long getReproducciones() const;
-    int getNumCreditos() const;
+    std::string getRutaAlta() const;
+    std::string getRutaBaja() const;
+    std::string getAlbumID() const;
+    void setAlbum(Album* a);
+    Album* getAlbum() const;
 
-    bool operator==(const Cancion& otra) const;
-    friend ostream& operator<<(ostream& os, const Cancion& c);
+    // === Sobrecargas agregadas según el PDF del desafío ===
+    bool operator==(const Cancion& otra) const;                    // Compara dos canciones por su ID
+    friend std::ostream& operator<<(std::ostream& os, const Cancion& c);  // Muestra la canción en consola
 };
 
 #endif
-
