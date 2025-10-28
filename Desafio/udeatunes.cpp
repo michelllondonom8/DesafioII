@@ -362,7 +362,7 @@ void UdeATunes::reproducirAleatorio(int k, bool esPremium) {
             cout << "Progreso: [" << (i + 1) << "/" << k << "]\n";
             cout << "====================================================\n\n";
 
-            cout << "[Reproduciendo... espere 3 segundos]\n\n";
+            cout << "[Reproduciendo...]\n\n";
             this_thread::sleep_for(chrono::seconds(3));
 
             contadorPublicidad++;

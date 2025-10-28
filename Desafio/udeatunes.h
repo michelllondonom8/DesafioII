@@ -46,7 +46,6 @@ public:
     void menuPrincipal();
     void cargarArchivos();
 
-    // métricas
     void sumarIteraciones(unsigned long n = 1);
     void sumarMemoria(size_t bytes);
     void restarMemoria(size_t bytes);

@@ -47,9 +47,8 @@ Cancion& Cancion::operator=(const Cancion& otra) {
     album = otra.album;
     return *this;
 }
+Cancion::~Cancion() {}
 
-Cancion::~Cancion() {
-}
 void Cancion::sumarReproduccion() {
     reproducciones++;
 }
@@ -60,6 +59,19 @@ long Cancion::getReproducciones() const { return reproducciones; }
 string Cancion::getRutaAlta() const { return rutaAlta; }
 string Cancion::getRutaBaja() const { return rutaBaja; }
 string Cancion::getAlbumID() const { return albumID; }
-
 void Cancion::setAlbum(Album* a) { album = a; }
 Album* Cancion::getAlbum() const { return album; }
+
+
+// Compara dos canciones por su ID
+bool Cancion::operator==(const Cancion& otra) const {
+    return id == otra.id;
+}
+
+// Permite imprimir información de la canción con cout << objeto;
+ostream& operator<<(ostream& os, const Cancion& c) {
+    os << "Canción: " << c.getTitulo()
+       << " | Duración: " << c.getDuracion() << " seg"
+       << " | ID: " << c.getId();
+    return os;
+}

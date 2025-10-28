@@ -1,11 +1,12 @@
 #ifndef CANCION_H
 #define CANCION_H
-
 #include <iostream>
 #include <string>
 #include <thread>
 #include <chrono>
+
 class Album;
+
 class Cancion {
 private:
     int id;
@@ -36,7 +37,9 @@ public:
     std::string getAlbumID() const;
     void setAlbum(Album* a);
     Album* getAlbum() const;
+
+    bool operator==(const Cancion& otra) const;
+    friend std::ostream& operator<<(std::ostream& os, const Cancion& c);
 };
 
 #endif
-
